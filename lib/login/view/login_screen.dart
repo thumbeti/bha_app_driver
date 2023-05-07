@@ -10,27 +10,22 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../service/loginService.dart';
 
-
 class LoginScreen extends StatelessWidget {
-  static String ? mobileNumber;
-  static String ? countrycode;
-  static String ? emailId;
-  static bool ? isPhone;
-   LoginScreen({Key? key}) : super(key: key);
-
+  static String? mobileNumber;
+  static String? countrycode;
+  static String? emailId;
+  static bool? isPhone;
+  LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var screenHeight=MediaQuery.of(context).size.height;
-    var screenWidth=MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
-
       body: Container(
         padding: EdgeInsets.symmetric(
-            horizontal: screenWidth*0.1,
-            vertical: screenHeight*0.1
-        ),
+            horizontal: screenWidth * 0.1, vertical: screenHeight * 0.1),
         height: screenHeight,
         width: screenWidth,
         child: Column(
@@ -40,46 +35,51 @@ class LoginScreen extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset('assets/dashboard/BhaApp_logo_NoBG_1.png',
-                height: screenHeight*0.055,),
-                Text('Login',
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                  fontSize: 24
-                ),)
+                Image.asset(
+                  'assets/dashboard/BhaApp_logo_NoBG_1.png',
+                  height: screenHeight * 0.055,
+                ),
+                Text(
+                  'Login',
+                  style: GoogleFonts.inter(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                      fontSize: 24),
+                )
               ],
             ),
             Column(
               children: [
-                phoneTextfield((v){
-                  mobileNumber=v.completeNumber.toString();
-                  countrycode=v.countryISOCode.toString();
+                phoneTextfield((v) {
+                  mobileNumber = v.completeNumber.toString();
+                  countrycode = v.countryISOCode.toString();
                   print(mobileNumber);
                 }),
-                SizedBox(height: screenHeight*0.02,),
-                blackButton('Continue', ()async{
-                  SharedPreferences prefs=await SharedPreferences.getInstance();
-                  prefs.setBool('isPhone',true);
-                  if(mobileNumber!=null && mobileNumber!.length>=10){
-                    isPhone=true;
-                    if(countrycode=='US'){
-                      MagicMask mask = MagicMask.buildMask('\\+9 (999) 999-9999');
+                SizedBox(
+                  height: screenHeight * 0.02,
+                ),
+                blackButton('Continue..', () async {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  prefs.setBool('isPhone', true);
+                  if (mobileNumber != null && mobileNumber!.length >= 10) {
+                    isPhone = true;
+                    if (countrycode == 'US') {
+                      MagicMask mask =
+                          MagicMask.buildMask('\\+9 (999) 999-9999');
                       mobileNumber = mask.getMaskedString(mobileNumber!);
                       print(mobileNumber);
                       LoginService().fireBasePhoneAuth(mobileNumber!, context);
-                    }else{
+                    } else {
                       LoginService().fireBasePhoneAuth(mobileNumber!, context);
                     }
-
-                  }else{
+                  } else {
                     Fluttertoast.showToast(msg: 'Enter valid mobile number');
                   }
-                }, screenWidth, screenHeight*0.05
-                )
+                }, screenWidth, screenHeight * 0.05)
               ],
             ),
-           /* Column(
+            /* Column(
               children: [
                 socialMediaButton(
                     'Continue with Google',
@@ -109,5 +109,4 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
-
 }
