@@ -10,23 +10,23 @@ void main() {
   runApp(const MyApp());
 }
 
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
       routes: {
-        '/splash':(BuildContext context) => const SplashScreen(),
-        '/login':(BuildContext context) =>  LoginScreen(),
-        '/register':(BuildContext context) => const RegisterScreen(),
-        '/otp':(BuildContext context) =>  OtpScreen(verificationId: '',),
-        '/dash':(BuildContext context) => const DashBoardScreen(),
-        '/profile':(BuildContext context) => const ProfileScreen(),
+        '/splash': (BuildContext context) => const SplashScreen(),
+        '/login': (BuildContext context) => LoginScreen(),
+        '/register': (BuildContext context) => const RegisterScreen(),
+        '/otp': (BuildContext context) => OtpScreen(
+              verificationId: '',
+            ),
+        '/dash': (BuildContext context) => const DashBoardScreen(),
+        '/profile': (BuildContext context) => const ProfileScreen(),
       },
     );
   }
